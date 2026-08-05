@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Mini_Battle_Game.vcxproj" Id="67806080-249a-4ccc-96b1-60a064f789f3" />
+</Solution>
