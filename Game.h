@@ -12,7 +12,6 @@ private:
     Monster monster;
     Potion potions[10];
     bool gameOver;
-	bool isQuitting;
     int currentTurn;
 
     void showMenu() const;
@@ -21,9 +20,7 @@ private:
     void printLine(char ch) const;
     void performMonsterTurn();
     void checkGameState();
-	bool playRound();
 	bool usePotion();
-	void resetGame();
 
 public:
     Game();

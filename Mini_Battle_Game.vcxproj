@@ -151,6 +151,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Potion.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Reflection.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

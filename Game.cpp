@@ -7,7 +7,6 @@ Game::Game()
     : player(),
       monster(),
       gameOver(false),
-	  isQuitting(false),
       currentTurn(1)
 {
 	for (int i = 0; i < 10; ++i)
@@ -20,7 +19,6 @@ Game::Game(const Player& player, const Monster& monster, const Potion potion[])
     : player(player),
       monster(monster),
       gameOver(false),
-	  isQuitting(false),
       currentTurn(1)
 {
 	for (int i = 0; i < 10; ++i)
@@ -31,7 +29,6 @@ Game::Game(const Player& player, const Monster& monster, const Potion potion[])
 
 Game::~Game()
 {
-	delete[] potions;
 }
 
 void Game::run()
@@ -40,40 +37,6 @@ void Game::run()
     
     showStatus();
 
-    while (true) 
-    {
-        if (isQuitting)
-            break;
-
-	    playRound();
-
-
-        printLine('*');
-
-        std::cout << "  ***      *      *     *  *****" << std::endl;
-        std::cout << " *        * *     **   **  *" << std::endl;
-        std::cout << " *  **   *****    * * * *  ****" << std::endl;
-        std::cout << " *   *  *     *   *  *  *  *" << std::endl;
-        std::cout << "  ***  *       *  *     *  *****" << std::endl;
-
-        std::cout << std::endl;
-
-        std::cout << "  ***   *       *  *****  ****" << std::endl;
-        std::cout << " *   *  *       *  *      *   *" << std::endl;
-        std::cout << " *   *   *     *   ****   ****" << std::endl;
-        std::cout << " *   *    *   *    *      *  *" << std::endl;
-        std::cout << "  ***      ***     *****  *   *" << std::endl;
-
-        printLine('*');
-
-		resetGame();
-        
-    }
-
-}
-
-bool Game::playRound() 
-{
     while (!gameOver)
     {
         std::cout << "===== Turn " << currentTurn << " =====\n\n";
@@ -93,25 +56,45 @@ bool Game::playRound()
         if (!processChoice(choice)) continue;
         checkGameState();
 
-        if (isQuitting) return false;
 
         if (!gameOver && monster.isAlive() && choice != 3)
         {
             performMonsterTurn();
             checkGameState();
             ++currentTurn;
-			continue;
+            continue;
         }
 
         if (choice == 3)
-			continue;
+            continue;
 
 
-		currentTurn = 1;
+        currentTurn = 1;
 
-        return !monster.isAlive();
     }
+
+
+    printLine('*');
+
+    std::cout << "  ***      *      *     *  *****" << std::endl;
+    std::cout << " *        * *     **   **  *" << std::endl;
+    std::cout << " *  **   *****    * * * *  ****" << std::endl;
+    std::cout << " *   *  *     *   *  *  *  *" << std::endl;
+    std::cout << "  ***  *       *  *     *  *****" << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "  ***   *       *  *****  ****" << std::endl;
+    std::cout << " *   *  *       *  *      *   *" << std::endl;
+    std::cout << " *   *   *     *   ****   ****" << std::endl;
+    std::cout << " *   *    *   *    *      *  *" << std::endl;
+    std::cout << "  ***      ***     *****  *   *" << std::endl;
+
+    printLine('*');
+
 }
+
+
 
 void Game::showMenu() const
 {
@@ -160,7 +143,6 @@ bool Game::processChoice(int choice)
         return true;
 
     case 4:
-        isQuitting = true;
         std::cout << "You exited the game.\n";
         return true;
 
@@ -206,16 +188,4 @@ void Game::checkGameState()
         std::cout << "\n" << player.getName()
                   << " was defeated. Game over.\n";
     }
-}
-
-void Game::resetGame()
-{
-	player = Player(player.getName(), player.getMaxHealth(), player.getAttackPower(), player.getScore());
-	monster = Monster(monster.getName(), monster.getMaxHealth(), monster.getAttackPower());
-	gameOver = false;
-	currentTurn = 1;
-	for (int i = 0; i < 10; ++i)
-	{
-		potions[i] = Potion();
-	}
 }
